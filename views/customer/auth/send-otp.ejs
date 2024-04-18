@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAINAY/OTP-VERIFICATION</title>
+    <link rel="stylesheet" type="text/css" href="/customer/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <form action="/send-otp" method="post" id="send-otp-form">
+            <h1>VERIFY OTP</h1>
+            <% if (message) { %>
+                <p><%= message %></p>
+            <% } %>
+            <div class="input-box">
+                <input type="text" placeholder="OTP"  name="otp" id="input_Otp" required>
+                <p class="text-danger" id="otp-error-display"></p>
+            </div>
+            
+            <div>
+               
+                <p class="text-danger" id="common-error-display"></p>
+               
+
+            </div>
+            <div class="ForgotPassowrd-link">
+                <a href="">Resend OTP</a>
+            </div>
+            
+            <button type="submit" class="btn" >SUBMIT</button>
+            
+
+            
+        </form>
+
+    </div>
+    <script>
+         const send_otp_Form = document.getElementById('send-otp-form');
+         const user_Otp= document.getElementById('input_Otp').value;
+
+         form.addEventListener('submit',(event)=>{
+        
+        let input_Errors=false;
+
+        document.getElementById("otp-error-display").innerHTML = "";
+
+        if(!user_Otp.value){
+            input_Errors = true;
+            document.getElementById('common-error-dispaly').innerHTML = 'Please enter otp';
+        }
+       
+       })
+       if(input_Errors){
+        event.preventDefault();
+       }
+
+    </script>
+
+</body>
+</html>

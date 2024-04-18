@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAINAY/LOGIN</title>
+    <link rel="stylesheet" type="text/css" href="/customer/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <form action="/login" method="post" id="login-form">
+            <h1>LOGIN</h1>
+            
+            <div class="input-box">
+                <input type="text" placeholder="Email"  name="email" id="input_Email1" required><i class="fa-solid fa-envelope"></i>
+                <p class="text-danger" id="username-error-display"></p>
+            </div>
+            
+            <div class="input-box">
+                <input type="text" placeholder="Password" name="password" id="input_Passowrd1" required><i class="fa-solid fa-lock"></i>
+                <p class="text-danger" id="password-error-display"></p>
+
+            </div>
+            <div>
+               
+                <p class="text-danger" id="common-error-display"></p>
+               
+
+            </div>
+            <div class="ForgotPassowrd-link">
+                <a href="">ForgotPassowrd?</a>
+            </div>
+            
+            <button type="submit" class="btn" >LOGIN</button>
+            
+
+            <div class="login-link">
+                <p>Create an account?<a href="register">REGISTER</a></p>
+            </div>
+            
+        </form>
+
+    </div>
+
+<script>
+     const login_Form = document.getElementById('login-form');
+     const user_email= document.getElementById('input_Email1');
+    
+     const user_password = document.getElementById('input_Password1');
+
+     login_Form.addEventListener('submit',(event)=>{
+        
+        let input_Errors=false;
+
+        document.getElementById("password-error-display").innerHTML = "";
+
+        if(!user_name.value  || !user_password.value){
+            input_Errors = true;
+            document.getElementById('common-error-dispaly').innerHTML = 'Please fill all the fields';
+        }
+       
+       })
+       if(input_Errors){
+        event.preventDefault();
+       }
+
+
+</script>
+</body>
+</html>

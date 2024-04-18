@@ -1,0 +1,104 @@
+     /*Admin Dashboard*/
+     
+    /* Sidebar styling */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      background-color: #343a40; /* Dark background color */
+      padding-top: 80px; /* Adjust top padding to match navbar height */
+    }
+    
+    /* Sidebar links */
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 15px;
+      color: white;
+      display: block;
+    }
+    
+    /* Style the active link */
+    .sidebar a.active {
+      background-color: #7ba8ed; /* Blue color */
+    }
+    
+    /* Add a gray background color and some padding to the main content */
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+    
+    /* Style the sidebar toggle button for small screens */
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .sidebar a {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+      .content {
+        margin-left: 0;
+      }
+    }
+
+    /* Add product button */
+
+    .bs-example{
+    	margin: 20px;
+    }
+  
+
+    body {
+      font-family: Arial, sans-serif; /* Set a common font family */
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+  }
+  
+  .container {
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack children vertically */
+      height: 100vh; /* Make the container full height of the viewport */
+  }
+  
+  nav {
+      display: flex; /* Use flexbox for layout */
+      justify-content: space-between; /* Align items horizontally with space between */
+      align-items: center; /* Align items vertically at the center */
+      background-color: #e6dede; /* Example background color */
+      color: rgb(19, 16, 16); /* Example text color */
+      padding: 10px 20px; /* Add padding */
+  }
+  
+  .logo {
+      display: flex; /* Use flexbox for layout */
+      align-items: center; /* Align items vertically at the center */
+  }
+  
+  .nav-lists {
+      list-style: none; /* Remove default list styling */
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+  }
+  
+  .nav-lists li {
+      display: inline-block; /* Display list items horizontally */
+      margin-left: 25px; /* Add margin between list items */
+  }
+  
+  .sidebar {
+      width: 300px; /* Set sidebar width */
+      background-color: #636060; /* Example background color */
+      padding: 20px; /* Add padding */
+  }
+  
+  .content {
+      flex: 1; /* Allow content area to expand to fill remaining space */
+      padding: 20px; /* Add padding */
+  }
+  

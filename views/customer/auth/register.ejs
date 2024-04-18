@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="/customer/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    
+    <div class="wrapper">
+        <form action="/register" method="post" id="register-form">
+            <h1>Create an account</h1>
+            <div class="input-box">
+                <input type="text" placeholder="Name"  name="name" id="input_User1" required><i class="fa-solid fa-user"></i>
+                <p class="text-danger" id="username-error-display"></p>
+                
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Email" name="email" id="input_Email1" required><i class="fa-solid fa-envelope"></i>
+                <p class="text-danger" id="email-error-display"></p>
+               
+
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Phone number" name="phone" id="input_Phone1" required><i class="fa-solid fa-phone"></i>
+                <p class="text-danger" id="phone-error-display"></p>
+
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="password" id="input_Password1" required><i class="fa-solid fa-lock"></i>
+                <p class="text-danger" id="password-error-display"></p>
+
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Confirm Password" name="confirmPassword" id="input_ConfirmPassword1" required>
+                <p class="text-danger" id="confirmpassword-error-display"></p>
+
+            </div>
+
+            <button type="submit" class="btn" >REGISTER</button>
+
+            <div class="login-link">
+                <p>Have already an account?<a href="login">LOGIN</a></p>
+            </div>
+            <div>
+               
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>
