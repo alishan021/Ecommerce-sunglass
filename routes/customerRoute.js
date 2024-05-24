@@ -16,12 +16,7 @@ import userOtp from '../models/userOtp.js';
 
 
 //rendering the first user guest home page
-router.get('/',getGuestUserHome);
-//home route
-
-router.get('/home',checkUserLoggedIn,requireAuth,checkBlockedUser,getHome);
-
-
+router.get('/',getHome);
 
 
 //getiing product details when clicked
@@ -29,9 +24,9 @@ router.get('/home-product-details/:id',requireAuth,checkBlockedUser,getHomeProdu
 
 //register route
 //router.route('/register').get(requireAuth,getRegister).post( registerValidator,registerController);
-router.route('/register').get(getRegister).post(register_User,verify_Otp,user_registration);
+router.route('/register').get( checkUserNotLoggedIn, getRegister).post(register_User,verify_Otp,user_registration);
 //login route
-router.get('/login',checkUserNotLoggedIn,getLogin);
+router.get('/login', checkUserNotLoggedIn, getLogin);
 
 
 //post login route

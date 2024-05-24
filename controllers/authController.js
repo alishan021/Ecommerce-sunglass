@@ -102,16 +102,12 @@ export const user_registration = async(req,res)=>{
             req.session.loggedIn = true;
             console.log(req.session.loggedIn);
             if (new_User) {
-
-                const userRegistered = (req.session.userLoggedIn||req.session.loggedIn) ? true : false;
-
-                const productList = await products.find({ isBlocked: true });
-                return res.render('home', { productList,userRegistered });
+                return res.redirect('/login');
             } else {
-                return res.render('register', { message: 'Your registration has failed' });
+                return res.redirect('/register');
             }
         } else {
-            return res.render('register', { message: 'User is not verified' });
+            return res.redirect('/register');
         }
     } catch (error) {
         console.log(error);
@@ -128,9 +124,7 @@ export const user_registration = async(req,res)=>{
 export const loginController = async(req,res)=>{
 
     try {
-
         const{ email,password} = req.body;
-
         req.session.user_Email = req.body.email;
          //validation
 
@@ -141,11 +135,8 @@ export const loginController = async(req,res)=>{
             })
          }
          
-         
-         
          const user = await users.findOne({email}).select('+password');
          
-
          if(!user){
             return res.status(404).send({
                 success:false,
@@ -161,16 +152,12 @@ export const loginController = async(req,res)=>{
        
          const matchPassword = await comparePassword(password,user.password)
 
-
          if(!matchPassword){
             return res.status(404).send({
                 success:false,
                 message:'Password is incorrect'
             })
-         }
-
-         //Generate token
-         
+         }         
      
          const token = await createToken( {userId:user._id,role:user.role});
         // const token = await createToken( {userId:user._id});
@@ -184,13 +171,10 @@ export const loginController = async(req,res)=>{
             return res.redirect('/admin/admin-dashboard');
         } else {
             // Redirect to user side
-            req.session.userLoggedIn = true;
-            
-            const userRegistered = (req.session.userLoggedIn||req.session.loggedIn) ? true : false;
-
-            console.log(userRegistered);
-            const productList = await products.find({isBlocked:true});
-            return res.render('home',{productList,userRegistered});
+            req.session.loggedIn = true;            
+            const userRegistered = req.session.loggedIn;
+            console.log('userRegistered : ' + userRegistered);
+            return res.redirect('/');
         }
         
     } catch (error) {

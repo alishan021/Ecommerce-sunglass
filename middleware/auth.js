@@ -97,33 +97,69 @@ const upload = multer({
 
  export default upload;
  
-//to check if user is registered and  logged in
-export const checkUserLoggedIn = (req, res, next) => {
-  // Check if user is logged in based on session
-  console.log(req.session.loggedIn);
-  console.log(req.session.userLoggedIn);
-  if (req.session.loggedIn||req.session.userLoggedIn) {
-      // User is logged in, proceed to next middleware
-      next();
+
+
+
+// //to check if user is registered and  logged in
+// export const checkUserLoggedIn = (req, res, next) => {
+//   // Check if user is logged in based on session
+//   console.log(req.session.loggedIn);
+//   console.log(req.session.userLoggedIn);
+//   if (req.session.loggedIn||req.session.userLoggedIn) {
+//       // User is logged in, proceed to next middleware
+//       next();
      
-  } else {
-      // User is not logged in, redirect to login page
-      res.render('customer/auth/login');
-  }
-};
+//   } else {
+//       // User is not logged in, redirect to login page
+//       res.render('customer/auth/login');
+//   }
+// };
 
-export const checkUserNotLoggedIn =(req,res,next) =>{
-  if(!req.session.loggedIn || !req.session.userLoggedIn){
-    //res.render('customer/auth/login')
-    next();
-  }
-  else{
-    
-    const productList =  products.find({isBlocked:true});
-      res.render('home',{productList});
 
+
+
+export const checkUserLoggedIn = async (req, res, next) => {
+  console.log(req.session.loggedIn);
+  try{
+       if (!req.session.loggedIn) {
+           return res.redirect('/login');
+       }
+       next();
+  }
+  catch(error){
+       console.log(error);
   }
 }
+
+
+
+
+export const checkUserNotLoggedIn = async(req,res,next)=>{
+  console.log(req.session.loggedIn);
+   try{
+       if(req.session.loggedIn){
+           return res.redirect('/');
+       }
+       return next()
+   }catch(error){
+       console.error(error)
+   }
+}
+
+
+
+// export const checkUserNotLoggedIn =(req,res,next) =>{
+//   if(!req.session.loggedIn || !req.session.userLoggedIn){
+//     //res.render('customer/auth/login')
+//     next();
+//   }
+//   else{
+    
+//     const productList =  products.find({isBlocked:true});
+//       res.render('home',{productList});
+
+//   }
+// }
 
 // to check if user is blocked
 export const checkBlockedUser = async (req, res, next) => {

@@ -22,36 +22,30 @@ export const getRegister = (req,res)=>{
     res.render('customer/auth/register');
 }
 
+
+
 export const getGuestUserHome = async (req,res)=>{
     try {
-        const productList = await products.find({isBlocked:true});
-        res.render('guestuserhome',{productList});
+        // const productList = await products.find({isBlocked:true});
+        // res.redirect('/login');
         
     } catch (error) {
-        
+        console.log(error);
     }
-    
 }
+
+
 
 export const getHome = async (req,res)=>{
     try { 
-       console.log(req.session.LoggedIn);
-       if(req.session.loggedIn){
-
-       }
-        const userRegistered = (req.session.userLoggedIn||req.session.loggedIn) ? true : false;
-        
+        const userRegistered = req.session.loggedIn;
         const productList = await products.find({isBlocked:true});
-
         res.render('home',{productList,userRegistered});
-        
         
     } catch (error) {
         console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-        
-    }
-    
+        res.status(500).send('Internal Server Error');   
+    } 
 }
 
 
@@ -65,7 +59,7 @@ export const getHomeProductDetails = async(req,res)=>{
     const productId = req.params.id;
     const productList = await products.findById(productId);
     console.log(productList)
-    const userRegistered = (req.session.userLoggedIn||req.session.loggedIn) ? true : false;
+    const userRegistered = req.session.loggedIn
     if (!productList) {
      
       return res.status(404).send('Product not found');
@@ -73,32 +67,36 @@ export const getHomeProductDetails = async(req,res)=>{
       res.render('home-product-details',{ productList, userRegistered});
 
     } }catch (error) {
-        
-       // res.status(500).send('Internal Server Error');
-       res.render('customer/auth/login');
+        console.log(error)
+        res.redirect('/login');
     }
 }
 
+
+
 export const getLogin =(req,res)=>{
-    
      res.render('customer/auth/login');
 }
+
+
 
 export const getVerifyMail = (req,res)=>{
     res.render('customer/auth/email-verification');
 }
+
+
 
 export const getSendOTP = (req,res)=>{
     //res.render('customer/auth/send-otp',{message})
     res.render('customer/auth/send-otp')
 }
 
+
+
 export const  get_Logout = async(req,res)=>{
   try {
-    delete req.session.LoggedIn;
-    delete req.session.userLoggedIn;
+    delete req.session.loggedIn;
     res.clearCookie('jwt');
-    //delete req.session.loggedIn;
     req.session.destroy((err)=>{
         if(err){
             console.log(err);
@@ -107,33 +105,27 @@ export const  get_Logout = async(req,res)=>{
             req.session.loggedOut = true;
             console.log(req.session.loggedOut);
             
-            res.render('customer/auht/login')
+            res.redirect('/login')
         }
     })
-    // Clear the JWT token cookie
-    
-   // console.log('Logout successfully');
-    //const productList = await products.find({isBlocked:true});
-    //res.render('customer/auth/login');
-    //res.render('guestuserhome',{productList});
   } catch (error) {
-    
+    console.log(error);
   }
 }
+
+
+
 export const getLogout = (req, res) => {
     res.clearCookie('jwt');
-    delete req.session.loggedIn;
-    delete req.session.userLoggedIn;
-   
+    delete req.session.loggedIn;   
     res.redirect('/login');
 };
+
+
 
 export const resendOTP = async (req,res) => {
     try {
        const user_email = req.session.userEmail;
-        console.log(user_email);
-        //user_id = req.session.userid;
-        // Call the sendOTP function to resend OTP
         const generated_OTP = await sendOTP(user_email);
         res.render('customer/auth/resend-otp');
     } catch (error) {
@@ -147,6 +139,9 @@ export const resendOTP = async (req,res) => {
 export const getForgotPassword = (req,res)=>{
     res.render('customer/auth/forgot-password');
 }
+
+
+
 
 export const postForgotPassword = async (req,res)=>{
     try{
@@ -165,35 +160,26 @@ export const postForgotPassword = async (req,res)=>{
         
         // Save reset token and expiration time to user document
         user.resetPasswordToken = resetToken;
-      
         user.resetPasswordExpires = resetTokenExpires;
-        
         await user.save();
 
-        
-        
-        
         // Send email with reset link containing token
         sendResetEmail(req.body.email,resetToken);
 
-
         // Replace this with your email sending logic
         res.send('Password reset link send to the mail');
-
-
-        
-
     } catch (error) {
-       
-    
         res.status(500).send('Error in resetting password');
-        
     }
 }
+
+
 
 export const getReset = async (req,res)=>{
     res.render('customer/auth/reset-password');
 }
+
+
 
 export const getResetPassword = async (req,res)=>{
    try {
@@ -210,6 +196,8 @@ export const getResetPassword = async (req,res)=>{
         res.status(500).send('Error in resetting password');
     }
 }
+
+
 
 export const postResetPassword = async(req,res)=>{
     try {

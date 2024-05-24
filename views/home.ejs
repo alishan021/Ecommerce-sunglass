@@ -19,7 +19,7 @@
       <a href="" class="logo"> <i class="fa-solid fa-store"></i>ZAINAY</a>
       <div class="main-header">
           <ul class="navbar">
-            <li a href="">Home</li>
+            <li a href="/">Home</li>
             <li a href="">About</li>
             <li a href="">Sunglasses</li>
             <li a href="">Eyeglasses</li>
@@ -33,12 +33,13 @@
                 <div id="dropdownContent" class="dropdown-content">
                   <% if (!userRegistered) { %>
                     <a href="/register">LOGIN/REGISTER</a>
+                    <% }else { %>
+                    <a href="/logout" id="logout-link">LOGOUT</a>
                     <% } %>
                    
                     <a href="#">MY ORDERS</a>
                     <a href="#">MY WISHLIST</a>
                     <hr>
-                    <a href="/logout" id="logout-link">LOGOUT</a>
                 </div>
             </div>
         </div>
