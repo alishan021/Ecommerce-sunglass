@@ -301,6 +301,7 @@ body{
     margin-top: 1em;
     padding: 1em;
     border-radius: 5px;
+   
     box-shadow: 1em 2em 2.5em rgba(1, 2, 68, 0.08);
     cursor: pointer;
     transition: all 0.45s ease;
@@ -315,6 +316,47 @@ body{
     height: auto;
   }
   
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px; /* Adjust as needed */
+   
+}
+
+.button-group button {
+    flex-grow: 1;
+    margin-right: 5px; /* Adjust as needed */
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.multiple-images {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.thumbnail {
+  width: 50px; /* Adjust thumbnail size as needed */
+  height: auto;
+  margin-right: 5px; /* Adjust margin between thumbnails */
+  cursor: pointer;
+}
+
+.thumbnail:last-child {
+  margin-right: 0; /* Remove margin from the last thumbnail */
+}
+
+.thumbnail:hover {
+  border: 2px solid blue; /* Add border when hovered */
+}
+
   
   
   .product-name {
@@ -630,7 +672,6 @@ body{
     color:#79bccf;
     padding-left: 1.5rem;
 }
-
 
 
 .gradient-custom-3 {

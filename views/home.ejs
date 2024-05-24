@@ -31,7 +31,10 @@
             <div class="dropdown " >
                 <button onclick="toggleDropdown()" class="dropbtn"><i class="fa-regular fa-user"></i></button>
                 <div id="dropdownContent" class="dropdown-content">
+                  <% if (!userRegistered) { %>
                     <a href="/register">LOGIN/REGISTER</a>
+                    <% } %>
+                   
                     <a href="#">MY ORDERS</a>
                     <a href="#">MY WISHLIST</a>
                     <hr>
@@ -150,21 +153,19 @@
     <!-- category btn -->
     <div class="category_btn">
       <div id="buttons">
-        <button class="button-value" onclick="filterProduct('all')">
-          All
+        <button class="button-value" onclick="filterProduct('All glasses')">
+          All glasses
         </button>
-        <button class="button-value" onclick="filterProduct('Topwear')">
-          Topwear
+        <button class="button-value" onclick="filterProduct('Men')">
+          Men
         </button>
-        <button class="button-value" onclick="filterProduct('Skirt')">
-          Skirt & Pants
+        <button class="button-value" onclick="filterProduct('Women')">
+         Women
         </button>
-        <button class="button-value" onclick="filterProduct('Jacket')">
-          Jacket
+        <button class="button-value" onclick="filterProduct('Kids')">
+          Kids
         </button>
-        <button class="button-value" onclick="filterProduct('Watch')">
-          Watch
-        </button>
+        
       </div>
       <div id="search-container">
         <input
@@ -182,17 +183,20 @@
         <% productList.forEach((product,index)=>{%>
           <div class="card">
             <div class="image-container">
+              
               <a href="/home-product-details/<%= product._id %>">
-              <img src="../customer/images/<%= product.image %>" alt="">
+              <img src="../customer/images/<%= product.image[0] %>" alt="">
               </a>
             </div>
             <div class="details">
-              <h5 class="product-name"><%= product.productname %></h5>
-              <h6 class="product-price"><%= product.price %></h6>
-             
+              <div class="product-info">
+                <h5 class="product-name"><%= product.productname %></h5>
+                <h6 class="product-price"><%= product.price %></h6>
+              </div>
+              <div class="button-group">
               <button class="crt-btn">Add to Cart</button>
               <i class="fa-regular fa-heart" id="heart-icon"></i>
-             
+            </div>
             </div>
           </div>
         <% })   %> 
@@ -279,31 +283,7 @@ window.onclick = function(event) {
 
 
  </script>
-  <script>
-      
-    // Example code to trigger logout when a logout button is clicked
-document.getElementById('logout-link').addEventListener('click', async () => {
-try {
-  // Send a request to the logout route on the server
-  const response = await fetch('/logout', {
-    method: 'GET',
-    credentials: 'include' // Include cookies in the request
-  });
-
-  // Check if the logout was successful
-  if (response.ok) {
-    // Redirect the user to the login page or any other page
-    window.location.href = '/login';
-  } else {
-    // Handle error if logout failed
-    console.error('Logout failed:', response.statusText);
-  }
-} catch (error) {
-  console.error('Error during logout:', error);
-}
-});
-
-  </script>
+  
   
  </footer>
 

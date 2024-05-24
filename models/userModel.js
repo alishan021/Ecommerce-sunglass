@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
         enum:['user','admin'],
         default:'user'
     },
+
+    isAdmin:{
+       type:Boolean,
+       default:false
+    },
     
     is_Verified:{
       type:Number,
@@ -45,9 +50,21 @@ const userSchema = new mongoose.Schema({
     isBlocked: {
       type: Boolean,
       default: false  // Default value for new users
+  },
+
+  resetPasswordToken:{
+    type: String,
+    default:null
+  },
+
+  resetPasswordExpires: {
+    type: Date,
+    default:null
   }
    
   },{timestamps:true});
+
+  
 
   //const user = mongoose.model('user',userSchema);
   export default mongoose.model('users',userSchema);

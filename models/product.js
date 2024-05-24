@@ -27,7 +27,8 @@ const ProductSchema = new mongoose.Schema({
         trim: true
     },
     image:{
-        type:String,
+        type:[String],
+        required:true
         
     },
      price:{
@@ -37,7 +38,7 @@ const ProductSchema = new mongoose.Schema({
     },
     isBlocked: {
         type: Boolean,
-        default: false  // Default value for new products
+        default: true  // Default value for new products
     }
 
 });

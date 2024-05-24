@@ -1,0 +1,83 @@
+.wrapper{
+    width: 420px;
+    background: #fdfefe;
+    border-radius: 30px;
+    padding: 30px 40px;
+  }
+
+
+.wrapper .input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+  }
+
+  .wrapper h1{
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .input-box input{
+    width: 100%;
+    height: 100%;
+    background:transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(0,0,0,.2);
+    border-radius: 40px ;
+    font-size: 16px;
+    padding: 20px 45px 20px 20px ;
+  }
+
+  .input-box i{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+
+  .wrapper .btn{
+    width: 50%;
+    height: 5vh;
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 90px;
+  }
+  
+  .wrapper .login-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  
+  }
+  
+  .login-link p a{
+    text-decoration: none;
+    font-weight: 600;
+  
+  }
+  
+  .login-link p a:hover{
+    text-decoration: underline;
+    color:#c4e1f8;
+  }
+  
+  .ForgotPassowrd-link{
+    display: flex;
+    margin-left: 210px;
+    padding-bottom: 15px;
+  }
+    
+  .text-danger {
+    color: red;
+}
+  

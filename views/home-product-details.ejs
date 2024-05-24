@@ -6,6 +6,8 @@
     <title>Store</title>
 
     <link rel="stylesheet" type="text/css" href="/customer/style2.css">
+    <link rel="stylesheet" type="text/css" href="/customer/zoomstyle.css">
+    <link rel="stylesheet" type="text/css" href="/customer/productdetails.css">
     <!-------link icons-->
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -31,7 +33,10 @@
             <div class="dropdown " >
                 <button onclick="toggleDropdown()" class="dropbtn"><i class="fa-regular fa-user"></i></button>
                 <div id="dropdownContent" class="dropdown-content">
+
+                    <% if (!userRegistered) { %>
                     <a href="/register">LOGIN/REGISTER</a>
+                    <% } %>
                     <a href="#">MY ORDERS</a>
                     <a href="#">MY WISHLIST</a>
                     <hr>
@@ -46,31 +51,58 @@
     </nav>
     </header>
 <!------------------Product-details------->
-    <div id="products">
-        <% if (productList && Array.isArray(productList)) { %>
-        <% productList.forEach((product,index)=>{%>
-            <div class="card">
-              <div class="image-container">
-               
-                    <img src="../customer/images/<%= product.image %>" alt="">
-                
-              </div>
-              <div class="details">
-                <h5 class="product-name"><%= product.productname %></h5>
-                <h6 class="product-price"><%= product.price %></h6>
-               
-                <button class="crt-btn">Add to Cart</button>
-                <i class="fa-regular fa-heart" id="heart-icon"></i>
-               
+     
+<div id="products">
+  <div class="zoom">
+    <div class="main-wrapper">
+      <div class="container">
+        <div class="product-div">
+          <div class="product-div-left">
+            <div class="original">
+              <div class="image-zoom-container">
+                <div class="img-container">
+                  <img src="../customer/images/<%= productList.image[0] %>" id="myimage">
+                </div>
               </div>
             </div>
-            <% }) %>
+            <div class="hover-container">
+              <div>
+                <% productList.image.forEach((image, index) => { %>
+                  <img src="../customer/images/<%= image %>" class="thumbnail" alt="Thumbnail <%= index + 1 %>">
+                <% }); %>
+              </div>
+            </div>
+          </div>
+          <div class="product-div-right">
+            <span class="product-name"><%= productList.productname %></span>
+            <span class="product-price"><%= productList.price %></span>
+            <div class="product-rating">
+              <span><i class="fas fa-star"></i></span>
+              <span><i class="fas fa-star"></i></span>
+              <span><i class="fas fa-star"></i></span>
+              <span><i class="fas fa-star"></i></span>
+              <span><i class="fas fa-star-half-alt"></i></span>
+              
+            </div>
+            <div class="rating-count">(350 ratings)</div>
 
-            <% } else { %>
-                <h2 class="text-center text-secondary mt-5">No products are found!</h2>
-            <% } %>
+            <p class="product-description"><%= productList.description %></p>
+            <span class="product-quantity">Quantity</span>
+            <div class="btn-groups">
+              <button type="button" class="add-cart-btn">Add to Cart</button>
+              <button type="button" class="buy-now-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="viewer">
+          <img src="../customer/images/<%= productList.image[0] %>">
+        </div>
+        <div class="magnifier"></div>
       </div>
-      
+    </div>
+  </div>
+</div>
+
 
     <!-- contact section -->
 <section class="contact">
@@ -123,6 +155,11 @@
        </div>
      </div>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+     
+     
+    
+   
      <!-----function that dispalys the profile dropdown menu-->
    <script>
     function toggleDropdown() {
@@ -146,32 +183,115 @@
   
   
    </script>
+   
+   
     <script>
-        
-      // Example code to trigger logout when a logout button is clicked
-  document.getElementById('logout-link').addEventListener('click', async () => {
-  try {
-    // Send a request to the logout route on the server
-    const response = await fetch('/logout', {
-      method: 'GET',
-      credentials: 'include' // Include cookies in the request
-    });
-  
-    // Check if the logout was successful
-    if (response.ok) {
-      // Redirect the user to the login page or any other page
-      window.location.href = '/login';
-    } else {
-      // Handle error if logout failed
-      console.error('Logout failed:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error during logout:', error);
-  }
-  });
-  
-    </script>
+
+const allHoverImages = document.querySelectorAll('.hover-container div img');
+const imgContainer = document.querySelector('.img-container');
+
+window.addEventListener('DOMContentLoaded', () => { 
+    allHoverImages[0].parentElement.classList.add('active');
     
+});
+
+allHoverImages.forEach((image) => {
+    image.addEventListener('mouseover', () =>{
+        imgContainer.querySelector('img').src = image.src;
+        resetActiveImg();
+        image.parentElement.classList.add('active');
+    });
+
+    // Add zooming functionality on mousemove
+    image.addEventListener('mousemove', (event) => {
+            const boundingRect = image.getBoundingClientRect();
+            const mouseX = event.clientX - boundingRect.left;
+            const mouseY = event.clientY - boundingRect.top;
+
+            // Calculate zoom scale based on mouse position
+            const scaleFactor = 2; // Adjust as needed
+            const zoomedImage = imgContainer.querySelector('img');
+            const zoomFactor = 1 + (scaleFactor - 1) *  (mouseX / image.width); // Change 1 for natural size
+            
+            // Apply zoom effect
+            zoomedImage.style.transform = `scale(${zoomFactor})`;
+            zoomedImage.style.transformOrigin = `${(mouseX / image.width) * 100}% ${(mouseY / image.height) * 100}%`;
+        });
+
+         // Reset zoom on mouseout (optional)
+         image.addEventListener('mouseout', () => {
+            const zoomedImage = imgContainer.querySelector('img');
+            zoomedImage.style.transform = 'scale(1)';
+            zoomedImage.style.transformOrigin = 'center';
+        });
+});
+
+function resetActiveImg(){
+    allHoverImages.forEach((img) => {
+        img.parentElement.classList.remove('active');
+    });
+}
+    </script>
+
+<script>
+  function imageZoom(imgID, resultID) {
+var img, lens, result, cx, cy;
+img = document.getElementById(imgID);
+result = document.getElementById(resultID);
+/* Create lens: */
+lens = document.createElement("DIV");
+lens.setAttribute("class", "img-zoom-lens");
+/* Insert lens: */
+img.parentElement.insertBefore(lens, img);
+/* Calculate the ratio between result DIV and lens: */
+cx = result.offsetWidth / lens.offsetWidth;
+cy = result.offsetHeight / lens.offsetHeight;
+/* Set background properties for the result DIV */
+result.style.backgroundImage = "url('" + img.src + "')";
+result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+/* Execute a function when someone moves the cursor over the image, or the lens: */
+lens.addEventListener("mousemove", moveLens);
+img.addEventListener("mousemove", moveLens);
+/* And also for touch screens: */
+lens.addEventListener("touchmove", moveLens);
+img.addEventListener("touchmove", moveLens);
+function moveLens(e) {
+var pos, x, y;
+/* Prevent any other actions that may occur when moving over the image */
+e.preventDefault();
+/* Get the cursor's x and y positions: */
+pos = getCursorPos(e);
+/* Calculate the position of the lens: */
+x = pos.x - (lens.offsetWidth / 2);
+y = pos.y - (lens.offsetHeight / 2);
+/* Prevent the lens from being positioned outside the image: */
+if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
+if (x < 0) {x = 0;}
+if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
+if (y < 0) {y = 0;}
+/* Set the position of the lens: */
+lens.style.left = x + "px";
+lens.style.top = y + "px";
+/* Display what the lens "sees": */
+result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+}
+function getCursorPos(e) {
+var a, x = 0, y = 0;
+e = e || window.event;
+/* Get the x and y positions of the image: */
+a = img.getBoundingClientRect();
+/* Calculate the cursor's x and y coordinates, relative to the image: */
+x = e.pageX - a.left;
+y = e.pageY - a.top;
+/* Consider any page scrolling: */
+x = x - window.pageXOffset;
+y = y - window.pageYOffset;
+return {x : x, y : y};
+}
+}
+ </script>
+
+
    </footer>
   
      

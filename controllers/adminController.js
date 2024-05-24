@@ -19,7 +19,7 @@ export const getAdminDashboard = (req,res)=>{
 
 export const  getAdminUser = async(req,res)=>{
     try {
-        const userList = await users.find({}).exec();
+        const userList = await users.find({role:{$ne:'admin'}}).exec();
        // console.log(userList);
         
         if(!userList){
@@ -39,7 +39,7 @@ export const  getAdminUser = async(req,res)=>{
 
 export const getAdminPdct= async(req,res) =>{
      try {
-        const productList = await products.find({}).exec();
+        const productList = await products.find({}).populate ('category').exec();
         //  console.log(productList);
 
         if(!productList){
@@ -58,15 +58,25 @@ export const getAdminPdct= async(req,res) =>{
 }
 
 export const getAdminAddPdct = async(req,res)=>{
-
+    
     const categories = await category.find({});
+
     res.render('admin/admin_add_product', { categories });
 }
 
 export const postAdminAddProduct = async(req,res)=>{
     try {
+        
+       //const images = [];
+        const {productid,productname,description,category,price}=req.body;
+         
+        if (parseFloat(price) <= 200) {
+            return res.status(400).json({
+                success: false,
+                message: 'Price must be above 200'
+            });
+        }
 
-        const {productid,productname,description,category,price,image}=req.body;
         
         const existingProductname = await products.findOne({productname});
         if(existingProductname){
@@ -75,6 +85,13 @@ export const postAdminAddProduct = async(req,res)=>{
                 message: 'Productname already exists,Please update new productname'
             });
         }
+       
+     console.log('req.files:', req.files); // Debugging: Check the uploaded files
+        if (!req.files || req.files.length === 0) {
+           console.log('No files uploaded');
+        }
+         
+         const images = req.files.map(file => file.filename);
 
         const newProduct = new products({
             productid:req.body.productid,
@@ -82,12 +99,12 @@ export const postAdminAddProduct = async(req,res)=>{
             description: req.body.description,
             category:req.body.category,
             price: req.body.price,
-            image: req.file.filename,
+            image: images
         });
 
-        await newProduct.save();
-
-        //res.status(201).json({ message: 'Product added successfully' });
+        const result = await newProduct.save();
+        console.log(result);
+       
         res.redirect('/admin/admin_pdct_mgmnt');
 
     } catch (error) {
@@ -135,13 +152,10 @@ export const editPostAdminPdct = async (req,res)=>{
     
     console.log(productname);
     
-    const existingProductname = await products.findOne({productname});
-    if(existingProductname){
-        return res.status(200).json({
-            success: false,
-            message: 'Product already exists,Please update new product'
-        });
-   }
+   
+
+    // If there are uploaded files, map the filenames
+    const images = req.files?.map(file => file.filename) || [];
 
     const updatedProduct = await products.findByIdAndUpdate(product_id,{
         productid: req.body.productid,
@@ -149,7 +163,7 @@ export const editPostAdminPdct = async (req,res)=>{
         description: req.body.description,
         category: req.body.category,
         price: req.body.price,
-        image: req.file.filename,
+        image: images,
     }).exec();
     console.log(updatedProduct);
     res.redirect('/admin/admin_pdct_mgmnt');
@@ -166,7 +180,7 @@ export const blockProduct= async (req, res) => {
     try {
         const productId = req.params.id;
 
-        const updatedProduct = await products.findByIdAndUpdate(productId, { isBlocked: true });
+        const updatedProduct = await products.findByIdAndUpdate(productId, { isBlocked: true});
        
         res.redirect('/admin/admin_pdct_mgmnt');
 
@@ -251,20 +265,58 @@ export const postAdminCategory = async(req,res)=>{
    
 //to delete category
 
-export const deleteAdminCategory = (req, res) => {
-    category.findByIdAndDelete(req.params.id)
-        .then(category => {
-            if (category) {
-               res.redirect('/admin/admin_category')
-            } else {
-                return res.status(404).json({ success: false, message: 'Category not found' });
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            return res.status(500).json({ success: false, message: 'Internal Server Error' });
-        });
+//export const deleteAdminCategory = async (req, res) => {
+  //  try{
+    //const userId = req.params.id;
+
+    //const updatedCategory = await category.findByIdAndUpdate(userId, { is_Soft_Delete: true });
+   
+   // res.redirect('/admin/admin_category');    
+   // category.findByIdAndDelete(req.params.id)
+       // .then(category => {
+            //if (category) {
+             //  res.redirect('/admin/admin_category')
+            //} else {
+                //return res.status(404).json({ success: false, message: 'Category not found' });
+           // }
+      //  })
+   // }
+       // catch(error){
+           // console.error(error);
+           // return res.status(500).json({ success: false, message: 'Internal Server Error' });
+       // }
+//};
+//to softdelete the category
+export const softDeleteCategory = async (req, res) => {
+    try {
+        const categoryId = req.params.id;
+
+        const updatedCategory = await category.findByIdAndUpdate(categoryId, { is_Soft_Delete: true });
+       
+        res.redirect('/admin/admin_category');
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
 };
+
+//to unsoft delete category
+export const unsoftDeleteCategory= async (req, res) => {
+    try {
+        const categoryId = req.params.id;
+
+        const updatedCategory = await category.findByIdAndUpdate(categoryId, { is_Soft_Delete: false });
+       
+        res.redirect('/admin/admin_category');
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+};
+
+
 
 //to edit category
 
@@ -316,7 +368,8 @@ export const editPostAdminCategory = async (req,res) => {
    export const blockUser= async (req, res) => {
     try {
         const userId = req.params.id;
-
+        req.session.userId = userId;
+        console.log(req.session.userId);
         const updatedUser = await users.findByIdAndUpdate(userId, { isBlocked: true });
        
         res.redirect('/admin/admin_user_mgmnt');
@@ -337,6 +390,22 @@ export const unblockUser = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+export const getAdminLogout = (req,res)=>{
+    //clearing authentication token
+
+    try {
+        // Clear the JWT token cookie from the client's browser
+        res.clearCookie('jwt');
+       
+        // Redirect the user to the login page
+        res.render('customer/auth/login');
+    } catch (error) {
+        // If an error occurs, log the error and send a response
+        console.error('Error during admin logout:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
 
 

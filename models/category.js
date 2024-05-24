@@ -12,13 +12,20 @@ import mongoose from 'mongoose';
     title:{
         type:String,
         required:true,
-        trim: true
+        trim: true,
+        unique:true,
+        collation: { locale: 'en', strength: 2 }
     },
     desc:{
         type:String,
         required:true,
         trim: true
     }, 
+
+    is_Soft_Delete:{
+        type: Boolean,
+        default:false
+    }
   
 });
 

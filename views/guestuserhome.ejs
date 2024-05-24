@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+
+    <link rel="stylesheet" type="text/css" href="/customer/style2.css">
+    <!-------link icons-->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      Free shipping available on all orders!
+    </div> 
+    <nav>
+      <a href="" class="logo"> <i class="fa-solid fa-store"></i>ZAINAY</a>
+      <div class="main-header">
+          <ul class="navbar">
+            <li a href="">Home</li>
+            <li a href="">About</li>
+            <li a href="">Sunglasses</li>
+            <li a href="">Eyeglasses</li>
+          </ul>
+          <div class="header-icons">
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-regular fa-heart"></i></a>
+            <div class="dropdown " >
+                <button onclick="toggleDropdown()" class="dropbtn"><i class="fa-regular fa-user"></i></button>
+                <div id="dropdownContent" class="dropdown-content">
+                  
+                <a href="/register">LOGIN/REGISTER</a>
+                    <a href="#">MY ORDERS</a>
+                    <a href="#">MY WISHLIST</a>
+                    <hr>
+                  
+                </div>
+            </div>
+        </div>
+        
+        
+          </div>
+      </div>
+    </nav>
+    
+  </header>
+  <!-------------Banner section----------------->
+  <div id="parallax-wrapper">
+    <section>
+      <div class="p-one parallax-inner">
+        <div class="headline">
+          <div>
+            <h2>Stay cool in the hottest shades!</h2>
+            <p>
+              Quality is never an accident. It is always the result of
+              intelligent effort. We spend most of our time and energy for
+              good design and to achieve high quality. Every single detail
+              from material to technique is thought through with obsessive
+              attention.
+            </p>
+            <button class="outline_btn">Shop Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Brand Motive -->
+
+  <section>
+    <div class="content-text">
+      <p>
+        <span class="first-letter red">M</span> louye's founder and creative
+        director Meb Rure hails from an industrial design background. In 2015,
+        Meb decided to change gears and turn her energy towards Mlouye, a
+        collection of exceptional handbags. Focusing on quality material, good
+        design, craftsmanship and sustainability, Mlouye reflects the epitome
+        of quality over quantity. Meb was highly inspired by the Bauhaus
+        Movement's artists and architects. From Mies van der Rohe's works to
+        Kandinsky's paintings, to Aalto's furniture, she acquired a
+        rationalist vision of design by gleaning how they served a utilitarian
+        purpose in a cleverly simple way. Mlouye merges industrial design and
+        fashion, creating functional handbags made of luxurious and honest
+        materials to improve people's lives in small but important ways.
+      </p>
+      <div class="line-break"></div>
+      <p>
+        If our product doesn't satisfy you, we'll take it back. Innovation
+        being the key factor alongside aesthetic, Mlouye has brought
+        unexpected shapes with smart details, functionality and a new luxury
+        feel with a contemporary price point. Istanbul is where Mlouye was
+        born, the company's headquarters is now split between the US, and
+        Turkey. Quality is never an accident. It is always the result of
+        intelligent effort. We spend most of our time and energy for good
+        design and to achieve high quality. Every single detail from material
+        to technique is thought through with obsessive attention.
+      </p>
+    </div>
+  </section>
+
+   <!-- service section -->
+   <section class="services">
+    <h2>Why Choose ZAINAY</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
+      recusandae explicabo fugit accusantium, ipsum adipisci voluptatum, vitae
+      libero nam, at doloremque iure sunt velit commodi quisquam sapiente
+      eaque reiciendis eos.Lorem ipsum dolor sit amet consectetur adipisicing
+      elit.
+    </p>
+
+    <!-- service card -->
+    <div class="service-container">
+      <div class="service-card">
+        <i class="bx bx-line-chart"></i>
+        <h4>Quality Products</h4>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia
+          nesciunt facere voluptatibus.
+        </p>
+      </div>
+      <div class="service-card">
+        <i class="bx bxs-plane-alt"></i>
+        <h4>Fast Delivery</h4>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia
+          nesciunt facere voluptatibus.
+        </p>
+      </div>
+      <div class="service-card">
+        <i class="bx bx-support"></i>
+        <h4>24/7 Online Support</h4>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia
+          nesciunt facere voluptatibus.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- product category -->
+  <section class="categories">
+    <h2>Categories</h2>
+    <p>
+      Functional handbags made of luxurious materials to improve people's
+      lives in small but mighty ways.
+    </p>
+    <!-- category btn -->
+    <div class="category_btn">
+      <div id="buttons">
+        <button class="button-value" onclick="filterProduct('all glasses')">
+          All glasses
+        </button>
+        <button class="button-value" onclick="filterProduct('Men')">
+          Men
+        </button>
+        <button class="button-value" onclick="filterProduct('Women')">
+          Women
+        </button>
+        <button class="button-value" onclick="filterProduct('Kids')">
+          Kids
+        </button>
+       
+      </div>
+      <div id="search-container">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Search product name here.."
+        />
+        <button id="search">Search</button>
+      </div>
+    </div>
+
+    <!--------products card---------->
+    <div id="products">
+      <% if (Array.isArray(productList) && productList.length > 0) { %>
+        <% productList.forEach((product,index)=>{%>
+          <div class="card">
+            <div class="image-container">
+              
+              <a href="/home-product-details/<%= product._id %>">
+              <img src="../customer/images/<%= product.image[0] %>" alt="">
+              </a>
+            </div>
+            <div class="details">
+              <div class="product-info">
+                <h5 class="product-name"><%= product.productname %></h5>
+                <h6 class="product-price"><%= product.price %></h6>
+              </div>
+              <div class="button-group">
+              <button class="crt-btn">Add to Cart</button>
+              <i class="fa-regular fa-heart" id="heart-icon"></i>
+            </div>
+            </div>
+          </div>
+        <% })   %> 
+      <% } else { %>
+        <h2 class="text-center text-secondary mt-5">No products are found !</h2>
+      <% } %>
+    </div>
+    
+    
+     
+  </section>
+
+<!-- contact section -->
+<section class="contact">
+  <h2>Contact us</h2>
+  <p>
+    Functional handbags made of luxurious materials to improve people's
+    lives in small but mighty ways. Lorem ipsum dolor sit amet consectetur,
+    adipisicing elit. Est dolorem cum corporis impedit quae praesentium
+    nulla atque ut, reprehenderit qui mollitia, facilis voluptates
+    cupiditate nam fuga, quis fugit voluptatum labore.
+  </p>
+
+  <div id="contact-container">
+    <input
+      type="email"
+      id="email-input"
+      placeholder="Enter your email address.."
+    />
+    <button id="email">Submit</button>
+  </div>
+</section>
+
+ <!-- footer section -->
+ <hr />
+ <footer> 
+   <div>
+     <h5>Quick links</h5>
+     <a href="#"><p>Bags</p></a>
+     <a href="#"><p>Shoes</p></a>
+     <a href="#"><p>Lookbook</p></a>
+   </div>
+   <div>
+     <h5>Info</h5>
+     <a href="#"><p>About</p></a>
+     <a href="#"><p>Contact us</p></a>
+     <a href="#"><p>Shipping policy</p></a>
+     <a href="#"><p>Blog</p></a>
+   </div>
+   <div>
+     <h5>Our mission</h5>
+     <p>
+       Quality materials, good designs, craftsmanship and sustainability.
+     </p>
+     <div>
+       <i class="bx bxl-facebook-square"></i>
+       <i class="bx bxl-instagram"></i>
+       <i class="bx bxl-youtube"></i>
+       <i class="bx bxl-tiktok"></i>
+       <i class="bx bxl-twitter"></i>
+     </div>
+   </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <!-----function that dispalys the profile dropdown menu-->
+ <script>
+  function toggleDropdown() {
+   var dropdownContent = document.getElementById("dropdownContent");
+   dropdownContent.classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+   if (!event.target.matches('.dropbtn')) {
+       var dropdowns = document.getElementsByClassName("dropdown-content");
+       for (var i = 0; i < dropdowns.length; i++) {
+           var openDropdown = dropdowns[i];
+           if (openDropdown.classList.contains('show')) {
+               openDropdown.classList.remove('show');
+           }
+       }
+   }
+}
+
+
+
+ </script>
+  <script>
+      
+    // Example code to trigger logout when a logout button is clicked
+document.getElementById('logout-link').addEventListener('click', async () => {
+try {
+  // Send a request to the logout route on the server
+  const response = await fetch('/logout', {
+    method: 'GET',
+    credentials: 'include' // Include cookies in the request
+  });
+
+  // Check if the logout was successful
+  if (response.ok) {
+    // Redirect the user to the login page or any other page
+    window.location.href = '/login';
+  } else {
+    // Handle error if logout failed
+    console.error('Logout failed:', response.statusText);
+  }
+} catch (error) {
+  console.error('Error during logout:', error);
+}
+});
+
+  </script>
+  
+ </footer>
+
+   
+  
+   
+   
+</body>
+</html>

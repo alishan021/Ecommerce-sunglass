@@ -40,20 +40,11 @@
                         <span>PRODUCT MANAGEMENT</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="admin_category" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
-                        <span>  CATEGORY MANAGEMENT</span>
+                 <li class="sidebar-item">
+                    <a href="admin_category" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>CATEGORY MANAGEMENT</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Add category</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Update Category</a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
@@ -157,7 +148,7 @@
                               <label for="category">Category:</label>
                               <select class="form-control" id="category" name="category" required>
                                 <option value="" disabled selected>Select category</option>
-                                <% categories.forEach(categry => { %>
+                                <%categories.filter(category=> category.is_Soft_Delete).forEach(categry => { %>
                                 <option value="<%= categry._id %>"><%= categry.title %></option>
                                 <% }); %>
                               </select>
@@ -181,13 +172,14 @@
                             </div>
                       
                             <div class="form-group">
-                              <label for="image">Image:</label>
+                                <label for="image">Image:</label>
                               <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="image" name="image" accept="image/*" multiple required>
-                                <label class="custom-file-label" for="image">Choose file</label>
+                                <input type="file" id="image" name="image" accept="image/*" multiple >
+                               
+                              </div>
                               </div>
                               <div id="image-preview" class="mt-2"></div>
-                            </div>
+                            
                       
                       
                             <button type="submit" class="btn btn-primary">Add Product</button>
@@ -235,6 +227,35 @@
         hamBurger.addEventListener("click", function () {
           document.querySelector("#sidebar").classList.toggle("expand");
         });</script>
+<script>
+    document.getElementById('image').addEventListener('change', function(event) {
+        const preview = document.getElementById('image-preview');
+        const files = event.target.files;
+
+        if (files) {
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail');
+                    img.style.maxWidth = '200px'; // Adjust as needed
+                    img.style.margin = '10px'; // Adjust as needed
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        // Update label text to show the number of files selected
+        const fileInput = event.target;
+        const label = fileInput.nextElementSibling;
+        label.textContent = files.length > 1 ? `${files.length} files selected` : files[0].name;
+    });
+    
+</script>
+
+
+
 </body>
 
 </html>

@@ -17,8 +17,8 @@ const otpSchema = new mongoose.Schema({
     },
     expiresAt: {
         type: Date,
-        // Set the default expiration time to 3 minutes from the current time
-        default: () => new Date(Date.now() + 3 * 60 * 1000) // 3 minutes in milliseconds
+        // Set the default expiration time to 1 minutes from the current time
+        default: () => new Date(Date.now() + 1 * 60 * 1000) // 1 minutes in milliseconds
     },
     OTPAttempts:{
         type: Number,

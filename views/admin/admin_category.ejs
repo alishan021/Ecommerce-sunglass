@@ -41,19 +41,10 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_category" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
-                        <span>  CATEGORY MANAGEMENT</span>
+                    <a href="admin_category" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>CATEGORY MANAGEMENT</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Add category</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Update Category</a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
@@ -159,8 +150,8 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Description</th>
-                                            <th scope="col">Action</th>
-                                            <th scope="col">       </th>
+                                            <th scope="col">Status     </th>
+                                            <th scope="col"> Action      </th>
 
                                             
                                         </tr>
@@ -168,11 +159,13 @@
                                     <tbody>
                                         <% categoryList.forEach((categry,index)=>{%>
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row"><%= index+1 %></th>
                                             <td><%= categry.title%></td>
                                             <td><%= categry.desc%></td>
+                                            <td><%= categry.is_Soft_Delete ? 'Active' : 'Blocked' %></td> <!-- Display status -->
                                             <td><a href="/admin/edit_category/<%= categry._id%>" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a></td>
-                                            <td><a href="/admin/delete_category/<%= categry._id%>" class="text-danger"><i class="fas  fa-trash fa-lg mx-1"></i></a></td>
+                                            <td><a href="/admin/soft_delete_category/<%= categry._id%>" class="text-success"><i class="fas fa-user-lock"></i></a></td>
+                                            <td><a href="/admin/unsoft_delete_category/<%= categry._id%>" class="text-danger"><i class="fas fa-user-lock"></i></a></td>
                                         </tr>
                                        
                                         <% })   %>   

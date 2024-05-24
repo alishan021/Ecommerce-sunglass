@@ -3,54 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
-    <link rel="stylesheet" type="text/css" href="/customer/style1.css">
+    <title>Store</title>
+
+    <link rel="stylesheet" type="text/css" href="/customer/style2.css">
+    <link rel="stylesheet" type="text/css" href="/customer/loginstyle.css">
+    
+    <!-------link icons-->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 <body>
+  <header>
+    <div class="header-top">
+      Free shipping available on all orders!
+    </div> 
+    <nav>
+      <a href="" class="logo"> <i class="fa-solid fa-store"></i>ZAINAY</a>
+      <div class="main-header">
+          <ul class="navbar">
+            <li a href="">Home</li>
+            <li a href="">About</li>
+            <li a href="">Sunglasses</li>
+            <li a href="">Eyeglasses</li>
+          </ul>
+          <div class="header-icons">
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-regular fa-heart"></i></a>
+            <div class="dropdown " >
+                <button onclick="toggleDropdown()" class="dropbtn"><i class="fa-regular fa-user"></i></button>
+                <div id="dropdownContent" class="dropdown-content">
+                    <a href="/register">LOGIN/REGISTER</a>
+                    <a href="#">MY ORDERS</a>
+                    <a href="#">MY WISHLIST</a>
+                    <hr>
+                    <a href="/logout" id="logout-link">LOGOUT</a>
+                </div>
+            </div>
+        </div>
+        
+        
+          </div>
+      </div>
+    </nav>
     
-    <div class="wrapper">
-        <form action="/register" method="post" id="register-form">
-            <h1>Create an account</h1>
-            <div class="input-box">
-                <input type="text" placeholder="Name"  name="name" id="input_User1" required><i class="fa-solid fa-user"></i>
-                <p class="text-danger" id="username-error-display"></p>
-                
+  </header>
+  <!-------------Login section----------------->
+  <div id="parallax-wrapper">
+    <section>
+      <div class="p-one parallax-inner">
+        <div class="headline">
+          <div>
+            <div class="wrapper">
+                <form action="/register" method="post" id="register-form">
+                    <h1>Create an account</h1>
+                    <div class="input-box">
+                        <input type="text" placeholder="Name"  name="name" id="input_User1" required><i class="fa-solid fa-user"></i>
+                        <span id="userErrorDisplay" style="color:red;"></span>
+                        
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Email" name="email" id="input_Email1" required><i class="fa-solid fa-envelope"></i>
+                        
+                        <span id="emailErrorDisplay" style="color:red;"></span>
+                       
+        
+                    </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Phone number" name="phone" id="input_Phone1" required><i class="fa-solid fa-phone"></i>
+                        <span id="phoneErrorDisplay" style="color:red;"></span>
+
+        
+                    </div>
+                    <div class="input-box">
+                        <input type="password" placeholder="Password" name="password" id="input_Password1" required><i class="fa-solid fa-lock"></i>
+                        
+        
+                    </div>
+        
+                    <div class="input-box">
+                        <input type="password" placeholder="Confirm Password" name="confirmPassword" id="input_ConfirmPassword1" required>
+                        
+                        <span id="confirmPasswordErrorDisplay" style="color:red;"></span>
+        
+                    </div>
+                    <span id="commonErrorDisplay" style="color:red;"></span>
+
+                    <button type="submit" class="btn" >REGISTER</button>
+        
+                    <div class="login-link">
+                        <p>Have already an account?<a href="login">LOGIN</a></p>
+                    </div>
+                    <div>
+                       
+                    </div>
+                </form>
             </div>
-            <div class="input-box">
-                <input type="text" placeholder="Email" name="email" id="input_Email1" required><i class="fa-solid fa-envelope"></i>
-                <p class="text-danger" id="email-error-display"></p>
-               
+           
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-            </div>
-            <div class="input-box">
-                <input type="text" placeholder="Phone number" name="phone" id="input_Phone1" required><i class="fa-solid fa-phone"></i>
-                <p class="text-danger" id="phone-error-display"></p>
+  
 
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" name="password" id="input_Password1" required><i class="fa-solid fa-lock"></i>
-                <p class="text-danger" id="password-error-display"></p>
+  
 
-            </div>
+   
 
-            <div class="input-box">
-                <input type="password" placeholder="Confirm Password" name="confirmPassword" id="input_ConfirmPassword1" required>
-                <p class="text-danger" id="confirmpassword-error-display"></p>
+  
 
-            </div>
+<!-- contact section -->
+<section class="contact">
+  <h2>Contact us</h2>
+  <p>
+    Functional handbags made of luxurious materials to improve people's
+    lives in small but mighty ways. Lorem ipsum dolor sit amet consectetur,
+    adipisicing elit. Est dolorem cum corporis impedit quae praesentium
+    nulla atque ut, reprehenderit qui mollitia, facilis voluptates
+    cupiditate nam fuga, quis fugit voluptatum labore.
+  </p>
 
-            <button type="submit" class="btn" >REGISTER</button>
+  <div id="contact-container">
+    <input
+      type="email"
+      id="email-input"
+      placeholder="Enter your email address.."
+    />
+    <button id="email">Submit</button>
+  </div>
+</section>
 
-            <div class="login-link">
-                <p>Have already an account?<a href="login">LOGIN</a></p>
-            </div>
-            <div>
-               
-            </div>
-        </form>
-    </div>
+ <!-- footer section -->
+ <hr />
+ <footer> 
+
+   <div>
+     <h5>Quick links</h5>
+     <a href="#"><p>Bags</p></a>
+     <a href="#"><p>Shoes</p></a>
+     <a href="#"><p>Lookbook</p></a>
+   </div>
+   <div>
+     <h5>Info</h5>
+     <a href="#"><p>About</p></a>
+     <a href="#"><p>Contact us</p></a>
+     <a href="#"><p>Shipping policy</p></a>
+     <a href="#"><p>Blog</p></a>
+   </div>
+   <div>
+     <h5>Our mission</h5>
+     <p>
+       Quality materials, good designs, craftsmanship and sustainability.
+     </p>
+     <div>
+       <i class="bx bxl-facebook-square"></i>
+       <i class="bx bxl-instagram"></i>
+       <i class="bx bxl-youtube"></i>
+       <i class="bx bxl-tiktok"></i>
+       <i class="bx bxl-twitter"></i>
+     </div>
+   </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <script>
+   // Get the form element
+const form = document.getElementById('register-form');
+
+const usernameInput = document.getElementById('input_User1');
+const emailInput = document.getElementById('input_Email1');
+const phoneInput = document.getElementById('input_Phone1');
+const passwordInput = document.getElementById('input_Password1');
+const confirmPasswordInput = document.getElementById('input_ConfirmPassword1');
+
+const commonErrorDisplay =  document.getElementById('commonErrorDisplay');
+const usernameErrorDispaly= document.getElementById('userErrorDisplay');
+const emailErrorDisplay= document.getElementById('emailErrorDisplay');
+const phoneErrorDisplay= document.getElementById('phoneErrorDisplay');
+const confirmPasswordErrorDisplay = document.getElementById('confirmPasswordErrorDisplay');
+
+form.addEventListener('submit', (event) => {
+          
+        let hasErrors = false;
+
+        // Clear previous error messages
+        commonErrorDisplay.textContent = "";
+        usernameErrorDispaly.textContent="";
+        emailErrorDisplay.textContent = "";
+        phoneErrorDisplay.textContent = "";
+        //passwordErrorDisplay.textContent ="";
+        confirmPasswordErrorDisplay.textContent="";
+
+        if (!usernameInput.value || !emailInput.value || !phoneInput.value||!passwordInput.value||!confirmPasswordInput.value) {
+          hasErrors = true;
+          commonErrorDisplay.textContent  = "Please fill in all fields.";
+        }
+
+         // Check email validity
+         const emailValue = emailInput.value.trim();
+        if (!emailValue.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+            hasErrors = true;
+            emailErrorDisplay.textContent = "Please enter a valid email.";
+        } else if (emailValue === "") {
+            hasErrors = true;
+            emailErrorDisplay.textContent = "Please enter an email.";
+        }
+        
+        const phoneValue = phoneInput.value.trim();
+        if (phoneValue.length !== 10) {
+            hasErrors = true;
+            phoneErrorDisplay.textContent = "Please enter a valid phone number.";
+        } else if (phoneValue.startsWith("00")) {
+            hasErrors = true;
+            phoneErrorDisplay.textContent = "Phone number cannot start with '00'.";
+        } else if (phoneValue.includes(" ")) {
+            hasErrors = true;
+            phoneErrorDisplay.textContent = "Phone number cannot contain spaces.";
+        } else if (!/^\d+$/.test(phoneValue)) {
+            hasErrors = true;
+            phoneErrorDisplay.textContent = "Phone number must contain only digits.";
+        } else if (phoneValue.startsWith("0")) {
+            hasErrors = true;
+            phoneErrorDisplay.textContent = "Phone number cannot start with '0'.";
+        }
+
+        if(passwordInput.value !== confirmPasswordInput.value){
+          hasErrors = true;
+          confirmPasswordErrorDisplay.textContent = "Password mismatch";
+        }
+        
+        if (hasErrors) {
+        event.preventDefault();
+        }
+
+      });
+
+ </script>
+
+   <!-----function that dispalys the profile dropdown menu-->
+ <script>
+
+  function toggleDropdown() {
+   var dropdownContent = document.getElementById("dropdownContent");
+   dropdownContent.classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+   if (!event.target.matches('.dropbtn')) {
+       var dropdowns = document.getElementsByClassName("dropdown-content");
+       for (var i = 0; i < dropdowns.length; i++) {
+           var openDropdown = dropdowns[i];
+           if (openDropdown.classList.contains('show')) {
+               openDropdown.classList.remove('show');
+           }
+       }
+   }
+}
 
 
+
+ </script>
+
+
+  <script>
+      
+    // Example code to trigger logout when a logout button is clicked
+document.getElementById('logout-link').addEventListener('click', async () => {
+try {
+  // Send a request to the logout route on the server
+  const response = await fetch('/logout', {
+    method: 'GET',
+    credentials: 'include' // Include cookies in the request
+  });
+
+  // Check if the logout was successful
+  if (response.ok) {
+    // Redirect the user to the login page or any other page
+    window.location.href = '/login';
+  } else {
+    // Handle error if logout failed
+    console.error('Logout failed:', response.statusText);
+  }
+} catch (error) {
+  console.error('Error during logout:', error);
+}
+});
+
+  </script>
+ 
+  
+ </footer>
+
+   
+  
+   
+   
 </body>
 </html>

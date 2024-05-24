@@ -44,19 +44,10 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_category" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
-                        <span>  CATEGORY MANAGEMENT</span>
+                    <a href="admin_category" class="sidebar-link">
+                        <i class="lni lni-agenda"></i>
+                        <span>CATEGORY MANAGEMENT</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Add category</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Update Category</a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
@@ -174,14 +165,17 @@
                                     <tbody>
                                         <% productList.forEach((product,index)=>{%>
                                         <tr>
-                                            <td><%= index %></td>
+                                            <td><%= index+1 %></td>
                                             <td><%= product.productid %></td>
-                                            <td><img src="/customer/images/<%= product.image %>" width="30" class="img-thumbnail"/></td>
+                                            <td>
+                                               
+                                                <img src="/customer/images/<%= product.image[0] %>" width="30" class="img-thumbnail"/></td>
+                                                
                                             <td><%= product.productname %></td>
-                                            <td><%= product.category %></td>
+                                            <td><%= product.category.title %></td>
                                             <td><%= product.description%></td>
                                             <td><%= product.price %></td>
-                                            <td><%= product.isBlocked ? 'Blocked' : 'Active' %></td> 
+                                            <td><%= product.isBlocked ? 'Active' : 'Blocked' %></td> 
                                             <!--------------Display status------------->
                                             <td><a href="/admin/block-product/<%= product._id%>" class="text-success"><i class="fas fa-user-lock"></i></a></td>
                                             <td><a href="/admin/unblock-product/<%= product._id%>" class="text-danger"><i class="fas fa-user-lock"></i></a></td>

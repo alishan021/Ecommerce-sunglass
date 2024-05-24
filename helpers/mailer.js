@@ -1,10 +1,11 @@
 import { name } from 'ejs';
 import nodemailer from 'nodemailer';
 import users from '../models/userModel.js';
-import OTP from '../models/userOtp.js';
-
+import otps from '../models/userOtp.js';
+import products from '../models/product.js';
+import session from 'express-session';
 import otpGenerator from 'otp-generator';
-import { threeMinuteExpiryOtp} from './otpValidation.js';
+import { user_registration } from '../controllers/authController.js';
 
 
   
@@ -60,99 +61,99 @@ export const verifyMail = async(req,res)=>{
 
 //export default transporter;
 
-export const sendOTP= async (email, user_id) =>{
+export const verify_Otp = async(req,res)=>{
     try{
+        const { otp } = req.body;
+       
+        req.session.old_otp = req.body.otp;
+       
+         const otp_Data = await otps.findOne({otp})
+         
+         console.log(otp_Data)
+         if(!otp_Data){
+             res.render('customer/auth/send-otp',{message: 'Invalid otp'})
+         }
+         else
+         if (new Date() > otp_Data.expiresAt) {
+ 
+             // OTP has expired
+             const otp_Expired = true;
+             res.render('customer/auth/send-otp',{message: 'OTP expired'})
+         }
         
-        const generated_OTP = await otpGenerator.generate(6,
-            { upperCaseAlphabets: false, 
-               specialChars: false,
-               lowerCaseAlphabets: false
-            });
-            
-            console.log(generated_OTP);
+         //clear the database after OTP verification
+         console.log(req.session.userEmail);
+         await otps.deleteOne({email:req.session.userEmail,otp})
 
-            //Save otp to the database
-            const otpDoc = await OTP.create({ email, otp: generated_OTP });
-
-        const transporter = nodemailer.createTransport({
-            service:'gmail',
-            auth:{
-                user:'asma.shajan@gmail.com',
-                pass:'mqet mxyz lvvj koze'
-            }
-        });
-
+        req.session.is_userVerified = true; 
         
+       await  user_registration(req,res);
 
-             var mailOptions ={
-                from: 'asma.shajan@gmail.com',
-                to:email,
-                subject: 'OTP successfully sent to the mail',
-                text:`Your Otp is ${generated_OTP}`  
-            };
-    
-            transporter.sendMail(mailOptions,async (error,info)=>{
-                if(error){
-                    console.log(error)
-                }
-               
-                console.log('OTP Sent',info.messageId)
-                
-
-               
-                
-            })
-
-            
-            return generated_OTP;
-
-
-   
-        
     }
-    catch(error){
-        console.log(error.message);
+    catch (error) {
+        res.render('customer/auth/send-otp',{message: 'An error occured while verifying the otp'})
+        
     }
 }
 
 //to verify the otp send
 
-export const verifyOtp = async (req,res)=>{
+
+ 
+
+
+export const sendOTP = async (email) => {
     try {
-        
-       
+        // Find existing OTP document for the email
+        let otpDoc = await otps.findOne({ email });
 
-        const { email,otp } = req.body;
-        console.log(email,otp);
+        if (!otpDoc || otpDoc.expiresAt < new Date()) {
+            // OTP doesn't exist or has expired, generate a new OTP
+            const generated_OTP = await otpGenerator.generate(6, {
+                upperCaseAlphabets: false,
+                specialChars: false,
+                lowerCaseAlphabets: false
+            });
 
-        const otp_Data = await OTP.findOne({
-            
-            email,
-            otp
-        })
-        console.log(otp_Data)
-        if(!otp_Data){
-            res.render('customer/auth/send-otp',{message: 'Invalid otp'})
+            // Create or update OTP document with new expiration time
+            if (otpDoc) {
+                otpDoc.otp = generated_OTP;
+                otpDoc.expiresAt = new Date(Date.now() + 1 * 60 * 1000); // Set expiration time 1 minute from now
+                await otpDoc.save();
+            } else {
+                otpDoc = await otps.create({ email, otp: generated_OTP, expiresAt: new Date(Date.now() + 1 * 60 * 1000) });
+            }
+
+            // Send OTP via email
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'asma.shajan@gmail.com',
+                    pass: 'mqet mxyz lvvj koze'
+                }
+            });
+
+            const mailOptions = {
+                from: 'asma.shajan@gmail.com',
+                to: email,
+                subject: 'OTP successfully sent to the mail',
+                text: `Your Otp is ${generated_OTP}`
+            };
+
+            transporter.sendMail(mailOptions, async (error, info) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('OTP Sent', info.messageId);
+                }
+            });
+
+            return generated_OTP;
+        } else {
+            // OTP is still valid, no need to resend
+            return { error: 'Cannot resend OTP within the expiration time.', redirectURL: '/customer/auth/send-otp' };
         }
-
-        if (new Date() > otp_Data.expiresAt) {
-            // OTP has expired
-            res.render('customer/auth/send-otp',{message: 'OTP expired'})
-        }
-        
-        //clear the database after OTP verification
-
-        await OTP.deleteOne({email,otp})
-
-       // await users.findByIdAndUpdate({_id: user_id},
-         //  {$set : {is_Verified :1}
-        //});
-       
-        return res.render('home');
-       
-
     } catch (error) {
-        res.render('customer/auth/send-otp',{message: 'An error occured while verifying the otp'})
-        
+        console.log(error.message);
     }
 }

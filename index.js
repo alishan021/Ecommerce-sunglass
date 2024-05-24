@@ -9,6 +9,8 @@ import adminRoute from './routes/adminRoute.js';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import session from 'express-session';
+import nocache from 'nocache';
 
 
 //configure env
@@ -20,14 +22,27 @@ Connection();
 const app= express();
 
 //Middleware
+app.use(nocache());
+app.use(session({
+    secret: 'sunglass-ecommerce', // Change this to a random secret key
+    resave: false,
+    saveUninitialized: false
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(session({
+    secret: 'sunglass-ecommerce', // Change this to a random secret key
+    resave: false,
+    saveUninitialized: false
+}));
 
 //set the view engine
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(cookieParser());
+app.use(nocache());
 
 
 

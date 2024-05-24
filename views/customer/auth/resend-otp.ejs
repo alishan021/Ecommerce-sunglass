@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+
+    <link rel="stylesheet" type="text/css" href="/customer/style2.css">
+    <link rel="stylesheet" type="text/css" href="/customer/loginstyle.css">
+    
+    <!-------link icons-->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      Free shipping available on all orders!
+    </div> 
+    <nav>
+      <a href="" class="logo"> <i class="fa-solid fa-store"></i>ZAINAY</a>
+      <div class="main-header">
+          <ul class="navbar">
+            <li a href="">Home</li>
+            <li a href="">About</li>
+            <li a href="">Sunglasses</li>
+            <li a href="">Eyeglasses</li>
+          </ul>
+          <div class="header-icons">
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="#"><i class="fa-regular fa-heart"></i></a>
+            <div class="dropdown " >
+                <button onclick="toggleDropdown()" class="dropbtn"><i class="fa-regular fa-user"></i></button>
+                <div id="dropdownContent" class="dropdown-content">
+                    <a href="/register">LOGIN/REGISTER</a>
+                    <a href="#">MY ORDERS</a>
+                    <a href="#">MY WISHLIST</a>
+                    <hr>
+                    <a href="/logout" id="logout-link">LOGOUT</a>
+                </div>
+            </div>
+        </div>
+        
+        
+          </div>
+      </div>
+    </nav>
+    
+  </header>
+  <!-------------Login section----------------->
+  <div id="parallax-wrapper">
+    <section>
+      <div class="p-one parallax-inner">
+        <div class="headline">
+          <div>
+            <div class="wrapper">
+                <form action="/resend-otp" method="post" id="resend-otp-form">
+                    <h1> RESEND OTP</h1>
+                    
+                    <div class="input-box">
+                        <input type="text" placeholder="OTP"  name="otp" id="input_Otp" required>
+                        <p class="text-danger" id="otp-error-display"></p>
+                    </div>
+                    
+                    <div>
+                       
+                        <p class="text-danger" id="common-error-display"></p>
+                        
+                        <span id="timer" style="text-align: left;"></span>  <!-- Timer display -->
+                    </div>
+                    
+                    <button type="submit" class="btn" >SUBMIT</button>
+                    
+        
+                    
+                </form>
+        
+            </div>
+           
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  
+
+  
+
+   
+
+  
+
+<!-- contact section -->
+<section class="contact">
+  <h2>Contact us</h2>
+  <p>
+    Functional handbags made of luxurious materials to improve people's
+    lives in small but mighty ways. Lorem ipsum dolor sit amet consectetur,
+    adipisicing elit. Est dolorem cum corporis impedit quae praesentium
+    nulla atque ut, reprehenderit qui mollitia, facilis voluptates
+    cupiditate nam fuga, quis fugit voluptatum labore.
+  </p>
+
+  <div id="contact-container">
+    <input
+      type="email"
+      id="email-input"
+      placeholder="Enter your email address.."
+    />
+    <button id="email">Submit</button>
+  </div>
+</section>
+
+ <!-- footer section -->
+ <hr />
+ <footer> 
+   <div>
+     <h5>Quick links</h5>
+     <a href="#"><p>Bags</p></a>
+     <a href="#"><p>Shoes</p></a>
+     <a href="#"><p>Lookbook</p></a>
+   </div>
+   <div>
+     <h5>Info</h5>
+     <a href="#"><p>About</p></a>
+     <a href="#"><p>Contact us</p></a>
+     <a href="#"><p>Shipping policy</p></a>
+     <a href="#"><p>Blog</p></a>
+   </div>
+   <div>
+     <h5>Our mission</h5>
+     <p>
+       Quality materials, good designs, craftsmanship and sustainability.
+     </p>
+     <div>
+       <i class="bx bxl-facebook-square"></i>
+       <i class="bx bxl-instagram"></i>
+       <i class="bx bxl-youtube"></i>
+       <i class="bx bxl-tiktok"></i>
+       <i class="bx bxl-twitter"></i>
+     </div>
+   </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  
+   <!-----function that dispalys the profile dropdown menu-->
+ <script>
+  function toggleDropdown() {
+   var dropdownContent = document.getElementById("dropdownContent");
+   dropdownContent.classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+   if (!event.target.matches('.dropbtn')) {
+       var dropdowns = document.getElementsByClassName("dropdown-content");
+       for (var i = 0; i < dropdowns.length; i++) {
+           var openDropdown = dropdowns[i];
+           if (openDropdown.classList.contains('show')) {
+               openDropdown.classList.remove('show');
+           }
+       }
+   }
+}
+
+
+
+ </script>
+  <script>
+      
+    // Example code to trigger logout when a logout button is clicked
+document.getElementById('logout-link').addEventListener('click', async () => {
+try {
+  // Send a request to the logout route on the server
+  const response = await fetch('/logout', {
+    method: 'GET',
+    credentials: 'include' // Include cookies in the request
+  });
+
+  // Check if the logout was successful
+  if (response.ok) {
+    // Redirect the user to the login page or any other page
+    window.location.href = '/login';
+  } else {
+    // Handle error if logout failed
+    console.error('Logout failed:', response.statusText);
+  }
+} catch (error) {
+  console.error('Error during logout:', error);
+}
+});
+
+  </script>
+  <script>
+    const resend_Otp_Form = document.getElementById('resend-otp-form');
+    const user_Otp= document.getElementById('input_Otp').value;
+
+    resend_Otp_Form.addEventListener('submit',(event)=>{
+   
+   let input_Errors=false;
+
+   document.getElementById("otp-error-display").innerHTML = "";
+
+   if(!user_Otp.value){
+       input_Errors = true;
+       document.getElementById('common-error-dispaly').innerHTML = 'Please enter otp';
+   }
+  
+  })
+  if(input_Errors){
+   event.preventDefault();
+  }
+
+</script>
+
+<script>
+  // Timer countdown function
+  function startTimer(duration, display) {
+      let timer = duration, minutes, seconds;
+      setInterval(function () {
+          minutes = parseInt(timer / 60, 10);
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (--timer < 0) {
+              // Timer expired, handle the expiration here
+              clearInterval(intervalId);
+          }
+      }, 1000);
+  }
+
+  // Function to start the timer
+  function startResendOTPTimer() {
+      // Set the duration of the timer in seconds (for example, 60 seconds)
+      let duration = 1 * 60;
+      // Get the timer display element
+      let display = document.getElementById('timer');
+      // Start the timer
+      startTimer(duration, display);
+  }
+
+  // Call the function to start the timer when the page loads
+  window.onload = function () {
+      startResendOTPTimer();
+  };
+</script>
+
+  
+<script>
+  document.getElementById('resend-otp-link').addEventListener('click', async function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+
+    try {
+      //const old_otp = document.getElementById('input_Otp').value;
+
+        // Make a POST request to the backend to resend the OTP
+        const response = await fetch('/resend-new-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            // Optionally, you can include any data you need to send to the backend
+        });
+
+        if (response.ok) {
+            // Handle successful response (optional)
+            console.log('OTP resent successfully');
+        } else {
+            // Handle error response (optional)
+            console.error('Failed to resend OTP');
+        }
+    } catch (error) {
+        // Handle network errors or other exceptions (optional)
+        console.error('Error:', error);
+    }
+});
+
+</script>
+ </footer>
+
+   
+  
+   
+   
+</body>
+</html>
